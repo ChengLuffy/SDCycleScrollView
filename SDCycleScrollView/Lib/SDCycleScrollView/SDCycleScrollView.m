@@ -52,6 +52,8 @@ NSString * const ID = @"SDCycleScrollViewCell";
 
 @property (nonatomic, strong) UIImageView *backgroundImageView; // 当imageURLs为空时的背景图
 
+@property (nonatomic, assign) NSInteger index;
+
 @end
 
 @implementation SDCycleScrollView
@@ -94,6 +96,8 @@ NSString * const ID = @"SDCycleScrollViewCell";
     _bannerImageViewContentMode = UIViewContentModeScaleToFill;
     
     self.backgroundColor = [UIColor lightGrayColor];
+    
+    self.index = -1;
     
 }
 
@@ -359,6 +363,21 @@ NSString * const ID = @"SDCycleScrollViewCell";
         if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
             [self.mainView removeGestureRecognizer:gesture];
         }
+    }
+}
+
+- (CGFloat)progress {
+    NSInteger contentOffset = MAX(self.mainView.contentOffset.x, self.mainView.contentOffset.y);
+    NSInteger itemSpacing = self.scrollDirection == UICollectionViewScrollDirectionVertical ? self.sd_height : self.sd_width;
+    CGFloat scrollOffset = contentOffset % itemSpacing + 0.00;
+    CGFloat ret = scrollOffset / (self.scrollDirection == UICollectionViewScrollDirectionVertical ? self.sd_height : self.sd_width);
+    if (ret == 0 && self.index != 0) {
+        return self.index + 1;
+    } else {
+        if (self.index == 0 && ret == 0) {
+            ret += 1;
+        }
+        return ret + (self.index < 0 ? 0 : self.index);
     }
 }
 
@@ -643,6 +662,11 @@ NSString * const ID = @"SDCycleScrollViewCell";
         UIPageControl *pageControl = (UIPageControl *)_pageControl;
         pageControl.currentPage = indexOnPageControl;
     }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cycleScrollViewDidScroll:)]) {
+        [self.delegate cycleScrollViewDidScroll:self];
+    }
+    
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -669,6 +693,8 @@ NSString * const ID = @"SDCycleScrollViewCell";
     if (!self.imagePathsGroup.count) return; // 解决清除timer时偶尔会出现的问题
     int itemIndex = [self currentIndex];
     int indexOnPageControl = [self pageControlIndexWithCurrentCellIndex:itemIndex];
+    
+    self.index = indexOnPageControl;
     
     if ([self.delegate respondsToSelector:@selector(cycleScrollView:didScrollToIndex:)]) {
         [self.delegate cycleScrollView:self didScrollToIndex:indexOnPageControl];

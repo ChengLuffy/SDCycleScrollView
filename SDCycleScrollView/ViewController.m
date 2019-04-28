@@ -182,15 +182,16 @@
 }
 
 
-/*
+- (void)cycleScrollViewDidScroll:(SDCycleScrollView *)cycleScrollView {
+    NSLog(@"%@", @(cycleScrollView.progress));
+}
+
  
 // 滚动到第几张图回调
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index
 {
     NSLog(@">>>>>> 滚动到第%ld张图", (long)index);
 }
- 
- */
 
 
 

@@ -58,7 +58,8 @@ typedef enum {
 /** 图片滚动回调 */
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index;
 
-
+/** 图片滚动时回调 */
+- (void)cycleScrollViewDidScroll:(SDCycleScrollView *)cycleScrollView;
 
 
 
@@ -110,6 +111,9 @@ typedef enum {
 
 
 //////////////////////  滚动控制API //////////////////////
+
+/** 滑动进度 */
+@property (nonatomic, assign) CGFloat progress;
 
 /** 自动滚动间隔时间,默认2s */
 @property (nonatomic, assign) CGFloat autoScrollTimeInterval;
