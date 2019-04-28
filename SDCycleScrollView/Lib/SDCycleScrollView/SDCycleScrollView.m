@@ -94,7 +94,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
     _currentPageDotColor = [UIColor whiteColor];
     _pageDotColor = [UIColor lightGrayColor];
     _bannerImageViewContentMode = UIViewContentModeScaleToFill;
-    
+    _scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.backgroundColor = [UIColor lightGrayColor];
     
     self.index = -1;
