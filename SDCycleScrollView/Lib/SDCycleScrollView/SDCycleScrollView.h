@@ -112,6 +112,10 @@ typedef enum {
 
 //////////////////////  滚动控制API //////////////////////
 
+
+/** 滑动手势 */
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+
 /** 滑动进度 */
 @property (nonatomic, assign) CGFloat progress;
 

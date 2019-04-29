@@ -381,6 +381,10 @@ NSString * const ID = @"SDCycleScrollViewCell";
     }
 }
 
+- (UIPanGestureRecognizer *)panGestureRecognizer {
+    return self.mainView.panGestureRecognizer;
+}
+
 #pragma mark - actions
 
 - (void)setupTimer
